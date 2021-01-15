@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<title>Add Text</title>
+<style>
+    #text {
+        width: 1000px;
+        height: 500px;
+        margin: 10px;
+        font-size: large;
+        font-family: Arial, serif;
+    }
+
+    #add_text {
+        width: 100px;
+        height: 40px;
+        font-size: large;
+        font-family: Arial, serif;
+        margin: 10px;
+    }
+
+    h3 {
+        font-family: Arial, serif;
+        margin: 10px;
+        color: black;
+    }
+</style>
+<body>
+<h3>Add Text.</h3>
+
+<textarea id="text"></textarea>
+<br>
+<button id="add_text">Add Text</button>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $('#add_text').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/add',
+            contentType: 'text/plain; charset=utf-8',
+            data: $.trim($("#text").val()),
+            success: function (response) {
+                console.log(response);
+                alert("added");
+            },
+            error: function (response) {
+                console.log("not added");
+                alert("not added");
+            }
+        });
+    });
+</script>
+</html>

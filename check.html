@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<title>Text Test</title>
+<style>
+    #test {
+        width: 1000px;
+        height: 200px;
+        margin: 10px;
+        font-size: x-large;
+        font-family: Arial, serif;
+        text-align: justify;
+    }
+
+    #validate {
+        width: 1000px;
+        height: 200px;
+        margin: 10px;
+        font-size: x-large;
+        font-family: Arial, serif;
+        text-align: justify;
+        visibility: hidden;
+    }
+
+    h3 {
+        font-family: Arial, serif;
+        margin: 10px;
+        color: black;
+    }
+
+    #check {
+        width: 100px;
+        height: 40px;
+        font-size: large;
+        font-family: Arial, serif;
+        margin: 10px;
+    }
+
+    #check_result {
+        font-size: large;
+        font-family: Arial, serif;
+    }
+
+    .wrong_letter {
+        color: red;
+    }
+
+    .correct_letter {
+        color: green;
+    }
+</style>
+<body onload="init()">
+<h3>Fill the empty spaces. Replace '*' signs with correct letters.</h3>
+<textarea id="test">{{.Test}}</textarea>
+<br>
+<div id="validate">{{.Validate}}</div>
+<br>
+<button id="check" onclick="check()">Check</button>
+<span id="check_result"></span>
+</body>
+<script>
+    check_indexes = [];
+    validate = "";
+
+    function init() {
+        test = document.getElementById("test").value;
+        validate = document.getElementById("validate").innerHTML;
+        for (i = 0; i < validate.length; i++) {
+            tl = test[i];
+            vl = validate[i];
+            if (tl !== vl) {
+                check_indexes.push(i);
+            }
+        }
+    }
+
+    function check() {
+        var test = document.getElementById("test").value;
+        var new_text = validate.split("");
+        correct = 0;
+        for (i = 0; i < check_indexes.length; i++) {
+            tl = test[check_indexes[i]];
+            vl = validate[check_indexes[i]];
+            if (tl !== vl) {
+                new_text[check_indexes[i]] = "<span class='wrong_letter'>" + vl + "</span>";
+            } else {
+                new_text[check_indexes[i]] = "<span class='correct_letter'>" + vl + "</span>";
+                correct++;
+            }
+        }
+        new_text = new_text.join("");
+        var percent = Math.round(correct / check_indexes.length*100);
+        document.getElementById("validate").innerHTML = new_text;
+        document.getElementById("validate").style.visibility = "visible";
+        document.getElementById("check_result").innerHTML = correct + "/" + check_indexes.length + " | " + percent + "%";
+    }
+</script>
+</html>

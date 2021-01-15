@@ -3,6 +3,7 @@ FROM golang
 RUN mkdir /app
 ADD . /app
 WORKDIR /app
+RUN mkdir texts
 
 EXPOSE 8080
 
